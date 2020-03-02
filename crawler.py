@@ -52,7 +52,7 @@ def download_apk(package_name, download_url):
     try:
         r = requests.get(download_url, timeout=60)
         # save => <package name>.apk
-        with open('../sample-apk/' + file_name, 'wb') as apk:
+        with open('./sample-apk/' + file_name, 'wb') as apk:
             apk.write(r.content)
     except requests.exceptions.Timeout as e:
         print('time out')
