@@ -10,17 +10,18 @@ def get_html(url):
    return _html
 
 def get_package_name():
+    category = ['FINANCE', 'SHOPPING', 'LIFESTYLE']
     print("[*] get package name..")
     pkg_list = list()
+    for i in range(len(category)):
+        target_url = "https://play.google.com/store/apps/category/" + category[i]
+        html = get_html(target_url)
+        soup = BeautifulSoup(html, 'lxml')
 
-    target_url = "https://play.google.com/store/apps/category/FINANCE"
-    html = get_html(target_url)
-    soup = BeautifulSoup(html, 'lxml')
-
-    for item in soup.find_all("a"):
-        if ('href' in item.attrs) and ('/store/apps/details?id' in item.attrs['href']):
-            target = item.attrs['href']
-            pkg_list.append(target[23:])
+        for item in soup.find_all("a"):
+            if ('href' in item.attrs) and ('/store/apps/details?id' in item.attrs['href']):
+                target = item.attrs['href']
+                pkg_list.append(target[23:])
 
     pkg_list = list(set(pkg_list))
     print("[*] " + str(len(pkg_list)) + " package founded!")
